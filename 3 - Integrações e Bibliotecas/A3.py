@@ -8,16 +8,25 @@ import matplotlib.pyplot as plt
 import plotly.express as px 
 import seaborn as sns
 import smtplib
-import email.message as em 
 from babel.numbers import format_currency
 import os
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+from email.mime.base import MIMEBase
+from email import encoders
+
+#Instalar pip install -U kaleido
 
 #--------------------------------------------------------------------------------------------------
 # Passo 1 - Importar a base de dados (Pasta Vendas) 
 #--------------------------------------------------------------------------------------------------
 
+#Criando variavel para armazenar a pasta que está o arquivo .py
+script_dir = os.path.dirname(__file__)
+
 #Criando variavel para armazenar o caminho do arquivo de tb_vendas
-file_path = os.path.dirname(__file__) + '/dataSets/vendas.xlsx'
+file_path = script_dir + '/dataSets/vendas.xlsx'
+
 
 print(f"Iniciando processamento do arquivo <{os.path.basename(file_path)}>")
 
@@ -107,38 +116,61 @@ print("Análise de Produtos Vendidos por Loja Finalizada.")
 # Passo 7 - Criar um gráfico/dashboard da loja/estado que mais vendeu (em faturamento) <Resultado do Passo 4>
 #--------------------------------------------------------------------------------------------------
 
-#Criando um grafico de barras com ploty
+#Criando e salvando um grafico de barras do faturamento das lojas usando ploty <Passo 4>
 grafico_px = px.bar(tb_loja_faturamento, y='Faturamento', x=tb_loja_faturamento.index)
-grafico_px.show()
+
+#grafico_px.show()   #Mostra Dashborad interativo no navegador 
+
+# Caminho completo para salvar o gráfico
+grafico_loja_faturamento_path = os.path.join(script_dir, 'FaturamentoLojas.png')
+
+# Definir a resolução desejada (largura e altura em pixels) e a escala
+width = 1920
+height = 1080
+scale = 2
+
+# Salvar o gráfico
+grafico_px.write_image(grafico_loja_faturamento_path, width=width, height=height, scale=scale)
+#--------------------------------------------------------------------------------------------------
 
 
-#Criando Grafico com Matplot
+#Criando e salvando um grafico de barras da venda de produtos por unidade usando Matplot <Passo 2>
 
-plt.bar(tb_loja_faturamento.index, tb_loja_faturamento['Faturamento'])
+grafico_vendas_produto_quantidade_path = os.path.join(script_dir, 'ProdutosPorUnidade.png')
 
-plt.title('Faturamento por Lojas')
-plt.xlabel('Loja')
-plt.ylabel('Faturamento em M')
+plt.bar(tb_vendas_produto_quantidade.index, tb_vendas_produto_quantidade['Quantidade'])
 
-plt.subplots_adjust(bottom=0.250)  #Coloca mais espaço na margem de baixo da imagem 
+plt.title('Venda de Produtos por Unidade')
+plt.xlabel('Produtos')
+plt.ylabel('Unidades Vendidas')
+
+plt.subplots_adjust(bottom=0.300)  #Coloca mais espaço na margem de baixo da imagem 
 
 plt.xticks(rotation=90)
-plt.show()
+#plt.show()  #Exibe Grafico
 
-""""
-plt.figure(12,8)
+#Salva o Grafico na pasta 
+plt.savefig(grafico_vendas_produto_quantidade_path)
+#--------------------------------------------------------------------------------------------------
 
-sns.barplot(x=tb_loja_faturamento.index, y='Faturamento', data=tb_loja_faturamento, palette='viridis')
 
-plt.title('Faturamento por Lojas')
-plt.xlabel('Loja')
+#Criando e salvando um grafico de barras da venda de produtos por unidade usando Seaborn <Passo 3> 
+
+grafico_vendas_produto_faturamento_path = os.path.join(script_dir, 'ProdutosPorFaturamento.png')
+
+plt.bar(tb_vendas_produto_faturamento.index, tb_vendas_produto_faturamento['Faturamento'])
+
+plt.figure(figsize=(10, 6))  # Define o tamanho da figura
+
+sns.barplot(x=tb_vendas_produto_faturamento.index, y='Faturamento', data=tb_vendas_produto_faturamento, palette='viridis')
+
+plt.title('Venda de Produtos Por Faturamento')
+plt.xlabel('Produtos')
 plt.ylabel('Faturamento em M')
 
-plt.tight_layout()
+#Salva o Grafico na pasta 
+plt.savefig(grafico_vendas_produto_faturamento_path)
 
-plt.show()
-
-"""
 
 print("Produção de Gráficos Finalizada.")
 
@@ -162,30 +194,57 @@ print("Formatação de Tabelas Para Envio Finalizada.")
 # Passo 8 - Enviar um e-mail para o setor responsável.  (Enviar Item 2, 3, 4 )
 #--------------------------------------------------------------------------------------------------
  
-corpo_email = f"""
-<p>Prezados, tudo bem?</p>
-<p>Segue Analise de Vendas</p>
-<p> <b>Produto Mais Vendido (Faturamento)</b>
-{tb_vendas_produto_faturamento_f.to_html(index=False, justify='center')}</p>
 
+#TODO Implementar TryCath
 
-
-msg = em.Message()
-msg['Subject'] = "Teste em Python" # Assunto do email
-
-msg['From'] = 'rotinabackup58@gmail.com' #Conta de Email que irá enviar   
-password = 'fceveunimwskylxg'    #Senha do email que enviará (Senha de app criada) 
-
-msg['To'] = 'servico.backup.status@gmail.com'  #Email destino, quem vai receber   
-
-msg.add_header('Content-Type', 'text/html')
-
-msg.set_payload(corpo_email)
-
-#Faz login do Servidor do gmail e envia o email.
-s = smtplib.SMTP('smtp.gmail.com: 587')
-s.starttls()  #Ativa Criptografia TLS
-s.login(msg['From'], password)
-s.sendmail(msg['From'], [msg['To']], msg.as_string().encode('utf-8'))
+email_body = f"""
+<!DOCTYPE html>
+  <html>
+    <body>
+      <p>Prezados, tudo bem?</p>
+      <p>Segue Analise de Vendas</p>
+      <p> <h3>Produto Mais Vendido (Faturamento)</h1>
+      {tb_vendas_produto_faturamento_f.to_html(index=False, justify='center')}</p>
+    <p>Em Anexo Segue Graficos Gerados</p>
+  </body>
+</html>
 """
-print('Email Contendo Tabelas Enviado com Sucesso')
+
+# Configurações do email
+email_from = 'rotinabackup58@gmail.com'   
+email_to = 'servico.backup.status@gmail.com'
+email_subject = 'Analise da Tabela de Vendas'
+
+msg = MIMEMultipart()
+msg['From'] = email_from
+msg['To'] = email_to
+msg['Subject'] = email_subject
+
+# Anexando o corpo do email
+msg.attach(MIMEText(email_body, 'html'))
+
+# Função para anexar arquivos
+def anexar_arquivo(msg, file_path):
+    with open(file_path, 'rb') as attachment:
+        part = MIMEBase('application', 'octet-stream')
+        part.set_payload(attachment.read())
+    encoders.encode_base64(part)
+    part.add_header('Content-Disposition', f'attachment; filename= {os.path.basename(file_path)}')
+    msg.attach(part)
+
+# Anexando os arquivos
+anexar_arquivo(msg, grafico_loja_faturamento_path)
+anexar_arquivo(msg, grafico_vendas_produto_faturamento_path)
+anexar_arquivo(msg, grafico_vendas_produto_quantidade_path)
+
+# Enviando o email
+try:
+    server = smtplib.SMTP('smtp.gmail.com', 587)
+    server.starttls()
+    server.login(email_from, 'ccwrprxrwfumnkbl')  # Use uma senha de app do Gmail
+    text = msg.as_string()
+    server.sendmail(email_from, email_to, text)
+    server.quit()
+    print('Email Contendo Tabelas Enviado com Sucesso')
+except Exception as e:
+    print(f'Falha ao enviar email: {e}')
