@@ -8,8 +8,8 @@ import matplotlib.pyplot as plt
 import plotly.express as px 
 import seaborn as sns
 import smtplib
-from babel.numbers import format_currency
 import os
+from babel.numbers import format_currency
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
@@ -25,10 +25,11 @@ from email import encoders
 script_dir = os.path.dirname(__file__)
 
 #Criando variavel para armazenar o caminho do arquivo de tb_vendas
-file_path = script_dir + '/dataSets/vendas.xlsx'
-
+file_path = script_dir + '/dataSets/projeto1/vendas.xlsx'
 
 print(f"Iniciando processamento do arquivo <{os.path.basename(file_path)}>")
+
+print(file_path)
 
 #Carregando dados do arquivo na varivel tb_vendas 
 tb_vendas = pd.read_excel(file_path)
@@ -182,11 +183,14 @@ print("Produção de Gráficos Finalizada.")
 lb_formata_real = lambda v: format_currency(v, 'BRL', locale='pt_BR')
 
 #Cria lambda para formatação de valores inteiros
-lb_formata_int = lambda x: "{:,}".format(x).replace(',', '.')
+#lb_formata_int = lambda x: "{:,}".format(x).replace(',', '.')
 
 
 #Formatando a tabela vendas produto faturamento
 tb_vendas_produto_faturamento_f = pd.DataFrame(tb_vendas_produto_faturamento['Faturamento'].apply(lb_formata_real).reset_index())
+
+tb_vendas_produto_quantidade_f = pd.DataFrame(tb_vendas_produto_quantidade[['Quantidade']].reset_index())
+
 
 print("Formatação de Tabelas Para Envio Finalizada.")
 
@@ -203,8 +207,10 @@ email_body = f"""
     <body>
       <p>Prezados, tudo bem?</p>
       <p>Segue Analise de Vendas</p>
-      <p> <h3>Produto Mais Vendido (Faturamento)</h1>
+      <p> <h3>Produtos Vendidos (Faturamento)</h1>
       {tb_vendas_produto_faturamento_f.to_html(index=False, justify='center')}</p>
+      <p> <h3>Produtos Vendidos  (Unidades)</h1>
+      {tb_vendas_produto_quantidade_f.to_html(index=False, justify='center')}</p>      
     <p>Em Anexo Segue Graficos Gerados</p>
   </body>
 </html>
@@ -212,7 +218,7 @@ email_body = f"""
 
 # Configurações do email
 email_from = 'rotinabackup58@gmail.com'   
-email_to = 'servico.backup.status@gmail.com'
+email_to = 'servico.backup.status@gmail.com' 
 email_subject = 'Analise da Tabela de Vendas'
 
 msg = MIMEMultipart()
