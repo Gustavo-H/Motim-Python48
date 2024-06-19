@@ -4,7 +4,7 @@ import pandas as pd
 import plotly.express as px
 import seaborn as sns
 import matplotlib.pyplot as plt
-
+import numpy as np
 
 
 #PASSO 2 - Percorrer todos os arquivos (planilhas) existentes dentro de uma diretorio
@@ -109,7 +109,7 @@ venda_mensais.index = venda_mensais.index.strftime('%b/%Y')
 
 venda_mensais['Varicao'] = venda_mensais['Quantidade'].diff()
 
-#print(venda_mensais)
+print(venda_mensais)
 
 #2.1 - ANÁLISE DE FATURAMENTO TRIMESTRAL:**
 #Objetivo:** Calcular o faturamento trimestral do ano.
@@ -205,9 +205,9 @@ quantidade_loja_dv_grafico = pd.DataFrame(
     }
 )
 
-print(quantidade_produto_dv_grafico)
+#print(quantidade_produto_dv_grafico)
 
-print(quantidade_loja_dv_grafico)
+#print(quantidade_loja_dv_grafico)
 
 
 cores = {'Produto': 'green', 'Loja': 'yellow'}
@@ -219,9 +219,32 @@ grafico5.set_title("Quantidade de Devoluções por Produto e por Loja")
 #plt.show()
 
 
-#Para treinar em casa enviar os grafico gerados por email
+# Para treinar em casa enviar os grafico gerados por email
 # Tambem pode enviar as tabelas que voce quiser 
 # e se quiser fazer os grafico de sazonalidae  
+
+
+#Construindo um grafico de sazonalidade usando grafico de linha do ploty 
+
+#array com nomes das cores para cada mes vermelho negativo; azul positivo 
+text_color = np.where(venda_mensais['Varicao'] < 0, 'red', 'blue')
+
+#print(text_color)
+
+#Gerando o grafico 
+grafico6 = px.line(venda_mensais.reset_index(),
+                   x='Data',
+                   y='Quantidade',
+                   title='Vendas Mensais',
+                   markers=True,
+                   text=venda_mensais['Quantidade'])
+
+#update no grafico para colocar valores de cor
+grafico6.update_traces(textposition='top center',
+                       textfont=dict( color=text_color, size=15),
+                       marker=dict(color=text_color))
+
+#grafico6.show() 
 
 
 
