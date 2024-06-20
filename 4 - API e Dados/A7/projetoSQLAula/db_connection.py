@@ -65,7 +65,7 @@ class SQLServerConnection:
             data = cursor.fetchall()
             return [list(row) for row in data]
             
-            """ Para retornar os dados em dicionarios
+            """#Para retornar os dados em dicionarios
             for row in cursor.fetchall():
                 data.append(dict(zip(columns, row)))
             """

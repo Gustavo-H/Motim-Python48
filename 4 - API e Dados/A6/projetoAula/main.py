@@ -61,3 +61,8 @@ dbc.insere_data_frame_com_pd(df=df_produto, nome_tabela='TB_PRODUTO', if_exists=
 
 
 
+
+
+
+
+
