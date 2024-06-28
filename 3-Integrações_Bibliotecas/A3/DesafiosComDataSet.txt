@@ -1,0 +1,9 @@
+# Passo 0 - Entender o desafio que você quer resolver.
+# Passo 1 - Importar a base de dados (Pasta Vendas)
+# Passo 2 - Calcular o produto mais vendido (em quantidade)
+# Passo 3 - Calcular o produto mais vendido (em faturamento)
+# Passo 4 - Calcular a loja/estado que mais vendeu (em faturamento)
+# Passo 5 - Calcular o ticket médio por loja/estado. (Somar Valor de cada item e divide pelo total de vendas)
+# Passo 6 - Calcular Quantidade de produtos Vendidos por Loja
+# Passo 7 - Criar um gráfico/dashboard da loja/estado que mais vendeu (em faturamento)
+# Passo 8 - Enviar um e-mail para o setor responsável.   

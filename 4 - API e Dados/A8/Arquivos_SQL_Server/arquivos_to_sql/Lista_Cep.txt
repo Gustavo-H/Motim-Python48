@@ -1,0 +1,40 @@
+01001-000 - Praça da Sé, Sé, São Paulo, SP
+20010-000 - Rua Primeiro de Março, Centro, Rio de Janeiro, RJ
+30190-000 - Avenida Afonso Pena, Centro, Belo Horizonte, MG
+40010-000 - Rua Chile, Centro Histórico, Salvador, BA
+50010-000 - Avenida Conde da Boa Vista, Boa Vista, Recife, PE
+60010-000 - Rua Barão do Rio Branco, Centro, Fortaleza, CE
+70040-010 - Esplanada dos Ministérios, Zona Cívico-Administrativa, Brasília, DF
+80010-000 - Rua XV de Novembro, Centro, Curitiba, PR
+90010-000 - Avenida Borges de Medeiros, Centro Histórico, Porto Alegre, RS
+01002-000 - Rua Boa Vista, Centro, São Paulo, SP
+20210-000 - Rua Riachuelo, Centro, Rio de Janeiro, RJ
+30310-000 - Rua Rio Grande do Norte, Funcionários, Belo Horizonte, MG
+40110-000 - Rua da Paciência, Rio Vermelho, Salvador, BA
+50210-000 - Rua do Hospício, Boa Vista, Recife, PE
+60210-000 - Avenida da Universidade, Benfica, Fortaleza, CE
+70210-000 - SHS Quadra 6, Asa Sul, Brasília, DF
+80210-000 - Rua Marechal Deodoro, Centro, Curitiba, PR
+90210-000 - Rua Washington Luiz, Cidade Baixa, Porto Alegre, RS
+01101-000 - Rua José Paulino, Bom Retiro, São Paulo, SP
+21010-000 - Avenida Brasil, Benfica, Rio de Janeiro, RJ
+31210-000 - Avenida Cristiano Machado, Cidade Nova, Belo Horizonte, MG
+41110-000 - Avenida Antônio Carlos Magalhães, Pituba, Salvador, BA
+51210-000 - Avenida Marechal Mascarenhas de Moraes, Imbiribeira, Recife, PE
+61210-000 - Rua Guilherme Rocha, Centro, Fortaleza, CE
+71210-000 - SMAS Trecho 3, Guará, Brasília, DF
+81210-000 - Avenida Presidente Kennedy, Água Verde, Curitiba, PR
+91210-000 - Avenida Sertório, Navegantes, Porto Alegre, RS
+01301-000 - Avenida Paulista, Bela Vista, São Paulo, SP
+23010-000 - Estrada do Magarça, Guaratiba, Rio de Janeiro, RJ
+33010-000 - Rua da Bahia, Lourdes, Belo Horizonte, MG
+43010-000 - Avenida Sete de Setembro, Campo Grande, Salvador, BA
+53010-000 - Avenida Caxangá, Cordeiro, Recife, PE
+63010-000 - Rua São Paulo, Centro, Juazeiro do Norte, CE
+73010-000 - SHIN QI 3, Lago Norte, Brasília, DF
+83010-000 - Rua São José, São Francisco, Curitiba, PR
+93010-000 - Avenida Getúlio Vargas, Centro, São Leopoldo, RS
+01401-000 - Rua Oscar Freire, Jardins, São Paulo, SP
+24010-000 - Rua Visconde de Uruguai, Centro, Niterói, RJ
+34010-000 - Avenida Amazonas, Centro, Contagem, MG
+44010-000 - Rua Conselheiro Franco, Centro, Feira de Santana, BA
